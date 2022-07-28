@@ -3,13 +3,11 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import {
   Auth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
 } from '@angular/fire/auth';
 
 import { addDoc, Firestore, collection, getDocs} from '@angular/fire/firestore';
-import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 export interface Choice {
   value: string;
@@ -27,7 +25,7 @@ export class CreateComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   choices: Choice[] = [];
-  constructor(public auth: Auth, public firestore: Firestore, public snackBar: MatSnackBar) { }
+  constructor(public auth: Auth, public firestore: Firestore, public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -39,11 +37,14 @@ export class CreateComponent implements OnInit {
     }
     form.value.choices = this.choices
     this.addRank(form.value);
-    this.snackBar.open("Ranking successfully added!", "Okay", {
+    let snackBarRef = this.snackBar.open("Ranking successfully added!", "Okay", {
       duration: 3000
     })
     form.resetForm();
     this.choices = []
+    snackBarRef.afterDismissed().subscribe(() => {
+      this.router.navigate(['trending']);
+    })
   }
 
   addRank(values: any) {

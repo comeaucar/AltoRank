@@ -21,13 +21,20 @@ import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { TrendingComponent } from './trending/trending.component';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatRippleModule } from '@angular/material/core';
+import { RankingComponent } from './ranking/ranking.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    TrendingComponent,
+    RankingComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +52,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatInputModule,
     MatChipsModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatListModule,
+    MatGridListModule,
+    MatRippleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

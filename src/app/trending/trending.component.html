@@ -1,0 +1,14 @@
+<div>
+  <mat-grid-list cols="3" rowHeight="2:1">
+    <mat-grid-tile *ngFor="let ranking of rankings">
+      <mat-card (click)="navToRanking(ranking.id)" matRipple [matRippleColor]="rippleColor">
+        <mat-card-title>
+            {{ranking.title}}
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{ranking.prompt}}
+        </mat-card-subtitle>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
