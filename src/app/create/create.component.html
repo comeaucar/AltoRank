@@ -1,4 +1,4 @@
-<div >
+<div class="main-div">
     <mat-card style="min-width: 150px; max-width: 650px; width: 100%; margin-left: 10px; margin-top: 10px;">
         <mat-card-header>
             <mat-card-title>Create a new ranking</mat-card-title>
@@ -29,8 +29,23 @@
            (matChipInputTokenEnd)="add($event)"
            required>
         </mat-chip-list>
+        <mat-hint>Enter or comma to submit choice</mat-hint>
         <mat-hint style="color: #ff0000;" *ngIf="invalidChoices" color="warn">Must have at least 2 choices</mat-hint>
     </mat-form-field>
+    
+      <mat-slider ngModel #rankLimit="ngModel" name="rankLimit" thumbLabel [displayWith]="formatLabel" 
+      tickInterval="1"
+      step="1"
+      min="2"
+      max="{{sliderLength}}"
+      aria-label="units"
+      ></mat-slider>
+      <mat-hint>Set the max ranking. For example, set 10 if you wanted 1-10 rankings</mat-hint>
+      <br>
+      <mat-slide-toggle ngModel #private="ngModel" name="private">Private Results</mat-slide-toggle>
+      <br>
+      <mat-hint>Toggle this on if you wish the ranking results to only be visible to you</mat-hint>
+      <br>
     <button mat-raised-button color="primary" type="submit" style="margin-bottom: 5px; margin-top: 10px;">Create Ranking</button>
   </form>
 </mat-card>

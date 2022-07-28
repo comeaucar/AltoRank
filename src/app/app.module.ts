@@ -26,6 +26,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRippleModule } from '@angular/material/core';
 import { RankingComponent } from './ranking/ranking.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { RankingComponent } from './ranking/ranking.component';
     MatSnackBarModule,
     MatListModule,
     MatGridListModule,
-    MatRippleModule
+    MatRippleModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

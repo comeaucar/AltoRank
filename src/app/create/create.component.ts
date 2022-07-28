@@ -7,7 +7,7 @@ import {
 
 import { addDoc, Firestore, collection, getDocs} from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ChildrenOutletContexts, Router } from '@angular/router';
 
 export interface Choice {
   value: string;
@@ -25,6 +25,7 @@ export class CreateComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   choices: Choice[] = [];
+  sliderLength = 2;
   constructor(public auth: Auth, public firestore: Firestore, public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
@@ -62,6 +63,9 @@ export class CreateComponent implements OnInit {
 
     //Add our choice
     if (value) {
+      if (this.choices.length >= 2) {
+        this.sliderLength++;
+      }
       this.choices.push({ value: value });
     }
 
@@ -77,4 +81,7 @@ export class CreateComponent implements OnInit {
     }
   }
 
+  formatLabel(value: number) {
+    return value;
+  }
 }
