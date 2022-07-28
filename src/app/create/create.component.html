@@ -1,0 +1,24 @@
+<div >
+    <mat-card style="min-width: 150px; max-width: 650px; width: 100%; margin-left: 10px; margin-top: 10px;">
+        <mat-card-header>
+            <mat-card-title>Create a new ranking</mat-card-title>
+        </mat-card-header>
+  <form #createForm="ngForm" style="min-width: 150px; max-width: 650px; width: 100%;">
+    <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Title</mat-label>
+      <input matInput placeholder="Ex. Ranking the best fruit in the world"/>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Prompt</mat-label>
+      <input matInput placeholder="Ex. Rank your favourite 10 fruits"/>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Choices</mat-label>
+      <input matInput />
+    </mat-form-field>
+
+  </form>
+</mat-card>
+</div>

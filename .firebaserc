@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "altorank-59012"
+  },
+  "targets": {
+    "altorank-59012": {
+      "hosting": {
+        "altorank": [
+          "altorank-59012"
+        ]
+      }
+    }
+  }
+}
