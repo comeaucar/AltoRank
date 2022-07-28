@@ -3,22 +3,35 @@
         <mat-card-header>
             <mat-card-title>Create a new ranking</mat-card-title>
         </mat-card-header>
-  <form #createForm="ngForm" style="min-width: 150px; max-width: 650px; width: 100%;">
+  <form name="createForm" #createForm="ngForm" style="min-width: 150px; max-width: 650px; width: 100%;" (ngSubmit)="createSubmit(createForm)">
     <mat-form-field appearance="fill" style="width: 100%">
         <mat-label>Title</mat-label>
-      <input matInput placeholder="Ex. Ranking the best fruit in the world"/>
+      <input required name="title" ngModel #title="ngModel" matInput placeholder="Ex. Ranking the best fruit in the world"/>
     </mat-form-field>
 
     <mat-form-field appearance="fill" style="width: 100%;">
         <mat-label>Prompt</mat-label>
-      <input matInput placeholder="Ex. Rank your favourite 10 fruits"/>
+      <input required name="prompt" ngModel #prompt="ngModel" matInput placeholder="Ex. Rank your favourite 10 fruits"/>
     </mat-form-field>
-
-    <mat-form-field appearance="fill" style="width: 100%;">
-        <mat-label>Choices</mat-label>
-      <input matInput />
+    <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Available Choices</mat-label>
+        <mat-chip-list #chipList aria-label="Choice selection">
+            <mat-chip *ngFor="let choice of choices" (removed)="remove(choice)">
+                {{choice.value}}
+                <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-chip>
+            <input placeholder="New choice..."
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+           [matChipInputAddOnBlur]="addOnBlur"
+           (matChipInputTokenEnd)="add($event)"
+           required>
+        </mat-chip-list>
+        <mat-hint style="color: #ff0000;" *ngIf="invalidChoices" color="warn">Must have at least 2 choices</mat-hint>
     </mat-form-field>
-
+    <button mat-raised-button color="primary" type="submit" style="margin-bottom: 5px; margin-top: 10px;">Create Ranking</button>
   </form>
 </mat-card>
 </div>

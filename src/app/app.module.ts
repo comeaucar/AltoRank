@@ -18,6 +18,9 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,10 @@ import { MatInputModule } from '@angular/material/input';
     provideFirestore(() => getFirestore()),
     FormsModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    MatChipsModule,
+    MatIconModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
