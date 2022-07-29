@@ -1,4 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged
+} from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +17,55 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  closeResult = ''
+  invalidEmail = false
+  invalidPassword = false;
+  userLoggedIn = false;
+  constructor(private modalService: NgbModal, public auth: Auth, public router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.userLoggedIn = true;
+      } else {
+        console.log("Logged Out")
+      }
+    })
+  }
+
+  signOut() {
+    this.auth.signOut().then(() => this.router.navigate(['home']).then(() => window.location.reload()));
+  }
+
+  signInSubmit(value: any) {
+    signInWithEmailAndPassword(this.auth, value.email, value.password).then((res) => {
+      console.log(res)
+      this.modalService.dismissAll();
+      this.snackbar.open("Welcome Back!", "Enjoy your time on AltoRank", {
+        duration: 3000
+      })
+    }).catch((err) => {
+      console.log(err.code);
+    })
+  }
+
+  open(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with ${result}`
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`
+    })
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
 }

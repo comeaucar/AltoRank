@@ -1,1 +1,4 @@
 <p *ngIf="ranking.title">{{ranking.title}}</p>
+<mat-list *ngFor="let choice of ranking.choices">
+    <mat-list-item>{{choice.value}}</mat-list-item>
+  </mat-list>
