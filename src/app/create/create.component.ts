@@ -3,6 +3,8 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import {
   Auth,
+  getAuth,
+  onAuthStateChanged
 } from '@angular/fire/auth';
 
 import { addDoc, Firestore, collection, getDocs} from '@angular/fire/firestore';
@@ -20,6 +22,7 @@ export interface Choice {
 })
 export class CreateComponent implements OnInit {
 
+  currUserId: any;
   invalidChoices = false;
   choiceModel: string = ''
   addOnBlur = true;
@@ -29,6 +32,12 @@ export class CreateComponent implements OnInit {
   constructor(public auth: Auth, public firestore: Firestore, public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.currUserId = user.uid;
+      }
+    })
   }
 
   createSubmit(form: any) {
@@ -37,6 +46,8 @@ export class CreateComponent implements OnInit {
       return;
     }
     form.value.choices = this.choices
+    form.value.createdBy = this.currUserId
+    form.value.createdAt = new Date().toLocaleString();
     this.addRank(form.value);
     let snackBarRef = this.snackBar.open("Ranking successfully added!", "Okay", {
       duration: 3000

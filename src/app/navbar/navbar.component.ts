@@ -21,6 +21,8 @@ export class NavbarComponent implements OnInit {
   invalidEmail = false
   invalidPassword = false;
   userLoggedIn = false;
+  passwordsDoNotMatch = false;
+  emailInUse = false;
   constructor(private modalService: NgbModal, public auth: Auth, public router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
@@ -28,8 +30,6 @@ export class NavbarComponent implements OnInit {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.userLoggedIn = true;
-      } else {
-        console.log("Logged Out")
       }
     })
   }
@@ -40,19 +40,42 @@ export class NavbarComponent implements OnInit {
 
   signInSubmit(value: any) {
     signInWithEmailAndPassword(this.auth, value.email, value.password).then((res) => {
-      console.log(res)
       this.modalService.dismissAll();
       this.snackbar.open("Welcome Back!", "Enjoy your time on AltoRank", {
         duration: 3000
       })
     }).catch((err) => {
-      console.log(err.code);
+      if (err.code = "auth/invalid-email") {
+        this.invalidEmail = true;
+      }
+      if (err.code = "auth/invalid-password") {
+        this.invalidPassword = true;
+      }
+    })
+  }
+
+  signUpSubmit(value: any) {
+    if (value.password != value.con_password) {
+      this.passwordsDoNotMatch = true;
+      return;
+    }
+
+    this.passwordsDoNotMatch = false;
+
+    createUserWithEmailAndPassword(this.auth, value.email, value.password).then((res) => {
+      this.router.navigate(['home']).then(() => window.location.reload());
+    }).catch((err) => {
+      if (err.code = 'auth/email-already-in-use') {
+        this.emailInUse = true;
+      }
     })
   }
 
   open(content: any) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with ${result}`
+      this.invalidEmail = false;
+      this.invalidPassword = false
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`
     })
