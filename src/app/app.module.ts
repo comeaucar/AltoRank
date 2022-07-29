@@ -27,6 +27,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRippleModule } from '@angular/material/core';
 import { RankingComponent } from './ranking/ranking.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { CreatedRankingsComponent } from './created-rankings/created-rankings.component';
+import { CompletedRankingsComponent } from './completed-rankings/completed-rankings.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     NavbarComponent,
     HomeComponent,
     TrendingComponent,
-    RankingComponent
+    RankingComponent,
+    CreatedRankingsComponent,
+    CompletedRankingsComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +64,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatRippleModule,
     MatSlideToggleModule
   ],
-  providers: [],
+  providers: [{
+    provide: FIREBASE_OPTIONS, useValue: environment.firebase
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
