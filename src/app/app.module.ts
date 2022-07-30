@@ -32,6 +32,7 @@ import { CreatedRankingsComponent } from './created-rankings/created-rankings.co
 import { CompletedRankingsComponent } from './completed-rankings/completed-rankings.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { NewComponent } from './new/new.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     TrendingComponent,
     RankingComponent,
     CreatedRankingsComponent,
-    CompletedRankingsComponent
+    CompletedRankingsComponent,
+    NewComponent
   ],
   imports: [
     BrowserModule,

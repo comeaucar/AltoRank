@@ -1,69 +1,70 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-    <span>The best application for ranking anything!</span>
+    <span>Ranked voting for everything</span>
 </mat-toolbar-row>
 </mat-toolbar>
 <mat-toolbar>
     <span style="margin: auto">How it works  <mat-icon>arrow_downward</mat-icon></span>
 </mat-toolbar>
 
-<div class="main-div">
-<ngb-carousel *ngIf="images">
-    <ng-template ngbSlide>
-        <div class="carousel-caption">
-            <h1 style="color: black">1. Create an account</h1>
-            <h3 style="color: black">Then start creating and completing rankings!</h3>
-          </div>
-      <div class="picsum-img-wrapper">
-        <img [src]="images[0]" alt="animated photo of man creating an account" style="width: 100%; height: 80%">
-      </div>
-    </ng-template>
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper">
-        <img [src]="images[1]" alt="animated photo of a woman working on laptop">
-      </div>
-      <div class="carousel-caption">
-        <h1 style="color: black">2. Create rankings for other users to complete</h1>
-        <h3 style="color: black">Think of anything in the world!</h3>
-      </div>
-    </ng-template>
-    <ng-template ngbSlide>
-      <div class="picsum-img-wrapper">
-        <img [src]="images[2]" alt="animated photo of a man and woman viewing graphs">
-      </div>
-      <div class="carousel-caption">
-        <h1 style="color: black">3. Get results</h1>
-        <h3 style="color: black">We organize the resulting data into graphs and tables for you!</h3>
-      </div>
-    </ng-template>
-  </ngb-carousel>
+<div class="parent flex-parent">
+  <div class="child flex-child">
+    <mat-card style="padding: 50px">
+      <mat-card-title style="line-height: 1.6;">AltoRank provides users with the ability to create and participate in ranked voting for any topic imaginable</mat-card-title>
+      <mat-card-subtitle style="font-size: large;">Get started by <button mat-raised-button color="accent" (click)="open(signUpModal)">creating an account</button></mat-card-subtitle>
+    </mat-card>
+  </div>
+  <div class="child flex-child"><img class="image" [src]="images[0]"></div>
+</div>
+<div class="parent flex-parent">
+  <div class="child flex-child"><img class="image" [src]="images[1]"></div>
+  <div class="child flex-child">
+    <mat-card style="padding: 50px">
+      <mat-card-title style="line-height: 1.6;">You choose the topic, we'll do the rest</mat-card-title>
+      <mat-card-subtitle style="font-size: large; line-height: 1.6;">Simply create a ranked voting poll for a topic of your choosing. Users will then be able to participate in the poll by ranking the choices you provide.</mat-card-subtitle>
+      <mat-card-actions><button mat-raised-button color="primary" (click)="navCreate()">Create a poll</button></mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+<div class="parent flex-parent">
+  <div class="child flex-child">
+    <mat-card style="padding: 50px">
+      <mat-card-title style="line-height: 1.6;">Enjoy your results</mat-card-title>
+      <mat-card-subtitle style="font-size: large; line-height: 1.6;">We format the data into readable graphs so you can analyze the results of your poll.</mat-card-subtitle>
+    </mat-card>
+  </div>
+  <div class="child flex-child"><img class="image" [src]="images[2]"></div>
 </div>
 
+<app-trending></app-trending>
+<app-new></app-new>
 
-<!--<div class="main-div">
-<mat-card>
-    <mat-card-title>Welcome to AltoRank</mat-card-title>
-    <mat-card-subtitle></mat-card-subtitle>
-    <mat-card-content>
-        <mat-list>
-            <mat-list-item role="listitem">
-                <mat-icon>create</mat-icon>
-        Create custom rankings for any topic in the world! 
-    </mat-list-item>
-<mat-list-item role="listitem">
-    <mat-icon>checkmark</mat-icon>
-        Users will complete the rankings using their own opinions
-    </mat-list-item>
-<mat-list-item role="listitem">
-    <mat-icon>table_chart</mat-icon>
-        We format the resulting data into readable graphs and tables for you
-    </mat-list-item>
-    </mat-list>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="navCreate()">Create</button><img style="width: 350px; height: 350px;" src="/assets/images/new-user.png">
-        <button mat-raised-button color="accent">Trending Rankings</button>
-        <button mat-raised-button color="accent">New Rankings</button>
-    </mat-card-actions>
-</mat-card>
-</div>-->
+<ng-template #signUpModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Sign Up</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form #signUpForm="ngForm" name="signUpForm" (ngSubmit)="signUpSubmit(signUpForm.value)">
+      <div class="mb-3">
+        <mat-form-field appearance="fill" style="width: 100%">
+          <mat-label>Email</mat-label>
+        <input required name="email" type="email" ngModel #email="ngModel" matInput email/>
+        <mat-hint *ngIf="emailInUse" style="color: #ff0000;">Email already in use</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="fill" style="width: 100%">
+        <mat-label>Password</mat-label>
+      <input required name="password" type="password" ngModel #password="ngModel" matInput/>
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Confirm Password</mat-label>
+    <input required name="con_password" type="password" ngModel #con_password="ngModel" matInput/>
+    <mat-hint *ngIf="passwordsDoNotMatch" style="color: #ff0000;">Passwords do not match</mat-hint>
+  </mat-form-field>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-dark">Sign up</button>
+      </div>
+    </form>
+  </div>
+</ng-template>

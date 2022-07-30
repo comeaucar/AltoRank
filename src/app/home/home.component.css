@@ -10,3 +10,25 @@
 .carousel-control-prev-icon {
    filter: invert(1);
 }
+
+.parent{
+  padding: 1rem;
+}
+
+.flex-parent{
+  display: flex;
+}
+
+.child{
+  padding: 1rem;
+}
+
+.flex-child{
+  flex: 1;
+  align-self: center;
+}
+
+.image{
+  width: 900px;
+  height: 700px;
+}
