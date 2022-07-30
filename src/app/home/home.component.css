@@ -1,6 +1,12 @@
 .main-div{
-    height: 100vh;
+    height: 130vh;
     display: flex;
     justify-content: center;
     align-items: center;
   }
+
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+   filter: invert(1);
+}

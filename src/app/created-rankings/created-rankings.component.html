@@ -1,1 +1,34 @@
-<p>created-rankings works!</p>
+<mat-toolbar>
+    <mat-toolbar-row>
+    <span>{{currUserEmail}}</span><br>
+</mat-toolbar-row>
+<mat-toolbar-row>
+    <span>Viewing {{userRankings.length}} rankings</span>
+</mat-toolbar-row>
+</mat-toolbar>
+<div>
+    <mat-grid-list cols="4" rowHeight="3:2">
+      <mat-grid-tile *ngFor="let ranking of userRankings">
+        <mat-card matBadge="4" matBadgePosition="after" matBadgeColor="accent">
+          <mat-card-title >
+              {{ranking.data.title}}
+          </mat-card-title>
+          <mat-card-subtitle>
+              {{ranking.data.prompt}}
+          </mat-card-subtitle>
+          <mat-card-content>
+            
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="accent" (click)="navToRanking(ranking.id)">View <mat-icon>launch</mat-icon></button>
+            <button mat-raised-button color="warn">Edit <mat-icon>edit</mat-icon></button>
+            <button mat-raised-button>Share <mat-icon>share</mat-icon></button>
+            
+          </mat-card-actions>
+          <mat-card-footer >
+            Created on {{ranking.data.createdAt}}
+          </mat-card-footer>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>

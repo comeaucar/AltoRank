@@ -30,6 +30,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { CreatedRankingsComponent } from './created-rankings/created-rankings.component';
 import { CompletedRankingsComponent } from './completed-rankings/completed-rankings.component';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import { CompletedRankingsComponent } from './completed-rankings/completed-ranki
     MatListModule,
     MatGridListModule,
     MatRippleModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatBadgeModule,
+    MatToolbarModule
   ],
   providers: [{
     provide: FIREBASE_OPTIONS, useValue: environment.firebase
