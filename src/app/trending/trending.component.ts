@@ -16,7 +16,6 @@ export class TrendingComponent implements OnInit {
   rankings: any = []
   rippleColor = "#CBC3E3"
   constructor(public auth: Auth, public firestore: Firestore, private router: Router) {
-    console.log(auth.currentUser)
     this.getRankings()
    }
 
@@ -34,7 +33,6 @@ export class TrendingComponent implements OnInit {
   }
 
   navToRanking(id: any){
-    console.log(id)
     this.router.navigate(['ranking', id]);
   }
 
