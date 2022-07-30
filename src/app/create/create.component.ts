@@ -62,7 +62,6 @@ export class CreateComponent implements OnInit {
   addRank(values: any) {
     const dbInstance = collection(this.firestore, 'rankings');
     addDoc(dbInstance, values).then((res) => {
-      console.log(res);
     }).catch((err) => {
       console.log(err)
     })

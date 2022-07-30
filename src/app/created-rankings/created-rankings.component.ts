@@ -30,7 +30,7 @@ export class CreatedRankingsComponent implements OnInit {
 
     const querySnapshot = await getDocs(rankingQ);
     querySnapshot.forEach((doc) => {
-      console.log(doc.id)
+      
       const fDoc = {
         data: doc.data(),
         id: doc.id
@@ -38,7 +38,7 @@ export class CreatedRankingsComponent implements OnInit {
       this.userRankings.push(fDoc);
     })
 
-    console.log(this.userRankings)
+    
   }
 
   navToRanking(id: any){
