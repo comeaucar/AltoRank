@@ -1,4 +1,38 @@
-<p *ngIf="ranking.title">{{ranking.title}}</p>
-<mat-list *ngFor="let choice of ranking.choices">
-    <mat-list-item>{{choice.value}}</mat-list-item>
-  </mat-list>
+<mat-toolbar color="accent">
+  <span style="margin: auto">{{ranking.title}}</span>
+</mat-toolbar>
+<mat-toolbar>
+  <span>{{ranking.prompt}}</span>
+</mat-toolbar>
+
+  <div cdkDropListGroup style="margin: 15px">
+    <div class="example-container">
+      <h2>Available choices</h2>
+  
+      <div
+        cdkDropList
+        [cdkDropListData]="ranking.choices"
+        
+        class="example-list"
+        cdkDropListSortingDisabled
+        disabled="true"
+        (cdkDropListDropped)="drop($event)">
+        <div [cdkDragDisabled]="checkLimit()" class="example-box" *ngFor="let choice of ranking.choices; let i = index" cdkDrag>{{choice.value}}</div>
+      </div>
+    </div>
+  
+    <div class="example-container">
+      <h2>Your rankings (1 - {{ranking.rankLimit}})</h2>
+  
+      <div
+        cdkDropList
+        [cdkDropListData]="results"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of results; let i = index" cdkDrag><b>{{i + 1}}</b>{{item.value}}</div>
+      </div>
+    </div>
+    <div class="example-container">
+      <button (click)="submitRankings()" mat-raised-button style="font-size: larger; float: right; align-self: center;" color="warn">Submit</button>
+    </div>
+  </div>

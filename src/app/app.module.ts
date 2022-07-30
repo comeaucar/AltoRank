@@ -33,6 +33,7 @@ import { CompletedRankingsComponent } from './completed-rankings/completed-ranki
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NewComponent } from './new/new.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { NewComponent } from './new/new.component';
     MatRippleModule,
     MatSlideToggleModule,
     MatBadgeModule,
-    MatToolbarModule
+    MatToolbarModule,
+    DragDropModule
   ],
   providers: [{
     provide: FIREBASE_OPTIONS, useValue: environment.firebase
