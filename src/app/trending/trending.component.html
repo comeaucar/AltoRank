@@ -4,7 +4,7 @@
 <div>
   <mat-grid-list cols="4" rowHeight="3:2">
     <mat-grid-tile *ngFor="let ranking of rankings">
-      <mat-card matBadge="4" matBadgePosition="after" matBadgeColor="accent">
+      <mat-card matBadge="{{ranking.submissions}}" matBadgePosition="after" matBadgeColor="accent">
         <mat-card-title >
             {{ranking.title}}
         </mat-card-title>
@@ -19,7 +19,7 @@
           <button mat-raised-button>Share <mat-icon>share</mat-icon></button>
         </mat-card-actions>
         <mat-card-footer >
-          Created on {{ranking.createdAt}}
+          Created on {{ranking.createdAt}}<br>
         </mat-card-footer>
       </mat-card>
     </mat-grid-tile>
