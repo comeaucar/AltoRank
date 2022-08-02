@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
-import { getDoc, doc, collection, getDocFromCache } from 'firebase/firestore';
+import { ActivatedRoute, Router } from '@angular/router';
+import { getDoc, doc, collection, getDocFromCache, addDoc, limit, FieldValue, updateDoc } from 'firebase/firestore';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 
 @Component({
   selector: 'app-ranking',
@@ -22,15 +24,22 @@ export class RankingComponent implements OnInit, OnDestroy {
   private sub: any
   results: any = [];
   limitReached: boolean = false;
-  constructor(private route: ActivatedRoute, public auth: Auth, public firestore: Firestore, public snackbar: MatSnackBar) { }
+  currUser: any
+  originalChoices:any
+  constructor(private router: Router ,private route: ActivatedRoute, public auth: Auth, public firestore: Firestore, public snackbar: MatSnackBar) { }
 
   async ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id']
       this.getRanking().then((res) => {
-        this.ranking = res
-        console.log(this.ranking)
+        this.ranking = res 
       });
+    })
+
+    this.originalChoices = this.ranking
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      this.currUser = user
     })
   }
 
@@ -52,13 +61,46 @@ export class RankingComponent implements OnInit, OnDestroy {
 
   checkLimit(): boolean{
     if (this.results.length >= this.ranking.rankLimit) {
+      this.limitReached = true;
       return true;
     }
+    this.limitReached = false;
     return false
   }
 
   submitRankings() {
-    
+    if (this.results.length != this.ranking.rankLimit) {
+      this.snackbar.open(`Ranking length (${this.results.length}) does not equal limit (${this.ranking.rankLimit})`, "Dismiss");
+      return;
+    }
+    const ndoc = {
+      userId: this.currUser.uid,
+      rankingId: this.id,
+      submission: this.results,
+      timeSubmitted: new Date().toLocaleString()
+    }
+
+    for (let i = 0; i < this.results.length; i++){
+      this.results[i].rankCount[i]++;
+    }
+    const updateRanking = doc(this.firestore, 'rankings', this.id);
+    updateDoc(updateRanking, {
+      choices: this.results.concat(this.ranking.choices),
+      submissions: this.ranking.submissions + 1
+    }).then(() => {
+      console.log("updated submissions")
+    }).catch((err) => {
+      console.log(err)
+    })
+    const dbInstance = collection(this.firestore, 'completedRankings');
+    this.router.navigate(['completed-rankings']);
+    addDoc(dbInstance, ndoc).then((res) => {
+      const snackref = this.snackbar.open("Submitted!", "Dismiss", {
+        duration: 5000
+      })      
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 
   drop(event: any) {

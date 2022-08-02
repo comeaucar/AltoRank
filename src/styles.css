@@ -2,3 +2,13 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.second-custom-badge-accent.mat-badge-accent .mat-badge-content {
+    background-color: #979797;
+    color: rgb(0, 0, 0);
+}
+
+.third-custom-badge-accent.mat-badge-accent .mat-badge-content {
+    background-color: #CD7F32;
+    color: rgb(0, 0, 0);
+}

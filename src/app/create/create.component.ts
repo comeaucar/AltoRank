@@ -45,18 +45,25 @@ export class CreateComponent implements OnInit {
       this.invalidChoices = true
       return;
     }
-    form.value.choices = this.choices
+    let choicesObj = []
+    for (let i = 0; i < this.choices.length; i++){
+      let newChoice = {
+        choice: this.choices[i],
+        rankCount: new Array(form.value.rankLimit).fill(0)
+      }
+      choicesObj.push(newChoice)
+    }
+    form.value.choices = choicesObj
     form.value.createdBy = this.currUserId
     form.value.createdAt = new Date().toLocaleString();
+    form.value.submissions = 0
     this.addRank(form.value);
+    this.router.navigate(['trending']);
     let snackBarRef = this.snackBar.open("Ranking successfully added!", "Okay", {
       duration: 3000
     })
     form.resetForm();
     this.choices = []
-    snackBarRef.afterDismissed().subscribe(() => {
-      this.router.navigate(['trending']);
-    })
   }
 
   addRank(values: any) {

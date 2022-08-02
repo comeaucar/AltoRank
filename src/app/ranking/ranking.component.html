@@ -17,7 +17,7 @@
         cdkDropListSortingDisabled
         disabled="true"
         (cdkDropListDropped)="drop($event)">
-        <div [cdkDragDisabled]="checkLimit()" class="example-box" *ngFor="let choice of ranking.choices; let i = index" cdkDrag>{{choice.value}}</div>
+        <div [cdkDragDisabled]="checkLimit()" class="example-box" *ngFor="let choice of ranking.choices; let i = index" cdkDrag>{{choice.choice.value}}</div>
       </div>
     </div>
   
@@ -29,7 +29,16 @@
         [cdkDropListData]="results"
         class="example-list"
         (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of results; let i = index" cdkDrag><b>{{i + 1}}</b>{{item.value}}</div>
+        <div class="example-box" *ngFor="let item of results; let i = index" cdkDrag>
+          <b *ngIf="i == 0" matBadgeColor="accent" style="margin-left: 10px" matBadge="{{i + 1}}"></b>
+          <b *ngIf="i == 1" matBadgeColor="accent" class="second-custom-badge-accent" style="margin-left: 10px" matBadge="{{i + 1}}"></b>
+          <b *ngIf="i == 2" matBadgeColor="accent" class="third-custom-badge-accent" style="margin-left: 10px" matBadge="{{i + 1}}"></b>
+          <b *ngIf="i > 2"  style="margin-left: 10px" matBadge="{{i + 1}}"></b>
+          
+          
+          {{item.choice.value}}
+        
+        </div>
       </div>
     </div>
     <div class="example-container">

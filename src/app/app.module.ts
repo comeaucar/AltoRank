@@ -34,6 +34,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NewComponent } from './new/new.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatSlideToggleModule,
     MatBadgeModule,
     MatToolbarModule,
-    DragDropModule
+    DragDropModule,
+    AngularFirestoreModule
   ],
   providers: [{
     provide: FIREBASE_OPTIONS, useValue: environment.firebase
