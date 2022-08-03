@@ -62,7 +62,9 @@ export class CompletedRankingsComponent implements OnInit {
   }
 
   navToRanking(id:any) {
-    this.router.navigate(['results/' + id])
+    this.router.navigate(['results/' + id], {
+      queryParams: {borda: 'original'}
+    })
   }
 
 }

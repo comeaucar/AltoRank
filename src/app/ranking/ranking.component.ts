@@ -40,7 +40,6 @@ export class RankingComponent implements OnInit, OnDestroy {
     const auth = getAuth()
     onAuthStateChanged(auth, (user) => {
       this.currUser = user
-      console.log(this.currUser.uid)
       this.checkCompleted()
     })
 
@@ -55,7 +54,14 @@ export class RankingComponent implements OnInit, OnDestroy {
     querySnapshot.forEach((doc:any) => {
       
       if (doc.data()) {
-        this.router.navigate(['results/' + this.id]).then(() => window.location.reload())
+        if (this.ranking.private && this.ranking.createdBy != this.currUser.uid) {
+          this.router.navigate(['completed-rankings'])
+          this.snackbar.open("The results for this poll are private at this time", "Dismiss")
+        } else {
+          this.router.navigate(['results/' + this.id], {
+            queryParams: {borda: "original"}
+          }).then(() => window.location.reload())
+        }
       }
     })
   }
@@ -110,7 +116,9 @@ export class RankingComponent implements OnInit, OnDestroy {
       console.log(err)
     })
     const dbInstance = collection(this.firestore, 'completedRankings');
-    this.router.navigate(['results/' + this.id]);
+    this.router.navigate(['results/' + this.id], {
+      queryParams: {borda: 'original'}
+    });
     addDoc(dbInstance, ndoc).then((res) => {
       const snackref = this.snackbar.open("Submitted!", "Dismiss", {
         duration: 5000

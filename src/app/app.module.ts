@@ -37,6 +37,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { ResultsComponent } from './results/results.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatToolbarModule,
     DragDropModule,
     AngularFirestoreModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MatRadioModule,
+    MatTooltipModule
   ],
   providers: [{
     provide: FIREBASE_OPTIONS, useValue: environment.firebase
