@@ -1,1 +1,29 @@
-<p>completed-rankings works!</p>
+<mat-toolbar>
+    <span>Completed Rankings</span>
+</mat-toolbar>
+<div>
+    <mat-grid-list cols="4" rowHeight="3:2">
+      <mat-grid-tile *ngFor="let ranking of fRankings; let i = index">
+        <mat-card matBadge="4" matBadgePosition="after" matBadgeColor="accent">
+          <mat-card-title >
+              {{ranking.title}}
+          </mat-card-title>
+          <mat-card-subtitle>
+              {{ranking.prompt}}
+          </mat-card-subtitle>
+          <mat-card-content>
+            
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="accent" (click)="navToRanking(completedRankings[i].data.rankingId)">View <mat-icon>launch</mat-icon></button>
+            <button mat-raised-button color="warn">Delete <mat-icon>delete</mat-icon></button>
+            <button mat-raised-button>Share <mat-icon>share</mat-icon></button>
+            
+          </mat-card-actions>
+          <mat-card-footer >
+            Submitted at {{completedRankings[i].data.timeSubmitted}}
+          </mat-card-footer>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
