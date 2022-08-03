@@ -1,6 +1,14 @@
 <mat-toolbar color="accent">
   <span>{{ranking.title}} results</span>
 </mat-toolbar>
+<div style="margin-top: 15px; margin-left: 15px">
+  <mat-radio-group aria-label="Select Borda Type" *ngIf="currBorda">
+    <mat-radio-button style="margin-left: 5px" *ngFor="let option of bordaOptions" [value]="option" [checked]="currBorda == option.toLowerCase()" (change)="radioChange($event, option)">{{option}}
+      </mat-radio-button>
+  </mat-radio-group>
+  <mat-icon matRipple style="margin-left: 20px" matTooltip="Borda methods explained" (click)="redirectToBordaInfo()">info</mat-icon>
+</div>
+
 <mat-grid-list cols="1" rowHeight="2:1">
   <mat-grid-tile>
     <mat-card>
@@ -25,6 +33,7 @@
 [barPadding] = "barPadding"
 [tooltipDisabled]="false"
 [roundEdges]="false"
+[noBarWhenZero]="true"
 >
 </ngx-charts-bar-vertical>
 </mat-grid-tile>
@@ -51,7 +60,7 @@
 </mat-grid-tile>
 <mat-grid-tile>
   <mat-card>
-    <mat-card-title>Bar Graph</mat-card-title>
+    <mat-card-title>Pie Chart</mat-card-title>
   </mat-card>
   <ngx-charts-advanced-pie-chart
   [view]="[1400,570]"

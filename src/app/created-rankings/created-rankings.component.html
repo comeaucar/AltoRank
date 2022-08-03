@@ -9,7 +9,7 @@
 <div>
     <mat-grid-list cols="4" rowHeight="3:2">
       <mat-grid-tile *ngFor="let ranking of userRankings">
-        <mat-card matBadge="4" matBadgePosition="after" matBadgeColor="accent">
+        <mat-card matBadge="{{ranking.data.submissions}}" matBadgePosition="after" matBadgeColor="accent">
           <mat-card-title >
               {{ranking.data.title}}
           </mat-card-title>
