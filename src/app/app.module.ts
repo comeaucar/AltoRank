@@ -35,6 +35,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NewComponent } from './new/new.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { ResultsComponent } from './results/results.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
     RankingComponent,
     CreatedRankingsComponent,
     CompletedRankingsComponent,
-    NewComponent
+    NewComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,8 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
     MatBadgeModule,
     MatToolbarModule,
     DragDropModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NgxChartsModule
   ],
   providers: [{
     provide: FIREBASE_OPTIONS, useValue: environment.firebase

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateComponent } from './create/create.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -9,6 +9,7 @@ import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 import { CreatedRankingsComponent } from './created-rankings/created-rankings.component';
 import { CompletedRankingsComponent } from './completed-rankings/completed-rankings.component';
 import { NewComponent } from './new/new.component';
+import { ResultsComponent } from './results/results.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path: 'newest', component: NewComponent},
   { path: 'ranking/:id', component: RankingComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'created-rankings', component: CreatedRankingsComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'completed-rankings', component: CompletedRankingsComponent, canActivate: [AngularFireAuthGuard]}
+  { path: 'completed-rankings', component: CompletedRankingsComponent, canActivate: [AngularFireAuthGuard] },
+  {path: 'results/:id', component: ResultsComponent, canActivate: [AngularFireAuthGuard]}
 ];
 
 @NgModule({

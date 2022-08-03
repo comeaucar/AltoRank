@@ -1,0 +1,63 @@
+<mat-toolbar color="accent">
+  <span>{{ranking.title}} results</span>
+</mat-toolbar>
+<mat-grid-list cols="1" rowHeight="2:1">
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-title>Bar Graph</mat-card-title>
+    </mat-card>
+<ngx-charts-bar-vertical 
+*ngIf="res.length > 0" 
+[view]="[1400,500]"
+[results]="res"
+[schemeType]="schemeType"
+[xAxis]="xAxis"
+[yAxis]="yAxis"
+[legend]="legend"
+[showXAxisLabel]="showXAxisLabel"
+[showYAxisLabel]="showYAxisLabel"
+[xAxisLabel]="xAxisLabel"
+[yAxisLabel]="yAxisLabel"
+[legendTitle]="legendTitle"
+[animations]="animations"
+[showGridLines]="showGridLines"
+[showDataLabel]="showDataLabel"
+[barPadding] = "barPadding"
+[tooltipDisabled]="false"
+[roundEdges]="false"
+>
+</ngx-charts-bar-vertical>
+</mat-grid-tile>
+<mat-grid-tile>
+  <mat-card>
+    <mat-card-title>Gauge Chart</mat-card-title>
+  </mat-card>
+  <ngx-charts-gauge
+  *ngIf="res.length > 0"
+  [view]="[1400,570]"
+  [results]="res"
+  [legend]="legend"
+  >
+</ngx-charts-gauge>
+</mat-grid-tile>
+<mat-grid-tile>
+  <mat-card>
+    <mat-card-title>Number Card Chart</mat-card-title>
+  </mat-card>
+  <ngx-charts-number-card
+  [view]="[1400,570]"
+  [results]="res"
+  [cardColor]="cardColor"></ngx-charts-number-card>
+</mat-grid-tile>
+<mat-grid-tile>
+  <mat-card>
+    <mat-card-title>Bar Graph</mat-card-title>
+  </mat-card>
+  <ngx-charts-advanced-pie-chart
+  [view]="[1400,570]"
+  [results]="res"
+  [gradient]="gradient"
+  >
+</ngx-charts-advanced-pie-chart>
+</mat-grid-tile>
+</mat-grid-list>

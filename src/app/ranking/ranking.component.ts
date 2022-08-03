@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
+import { Firestore,query, where, getDocs } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getDoc, doc, collection, getDocFromCache, addDoc, limit, FieldValue, updateDoc } from 'firebase/firestore';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
@@ -40,6 +40,23 @@ export class RankingComponent implements OnInit, OnDestroy {
     const auth = getAuth()
     onAuthStateChanged(auth, (user) => {
       this.currUser = user
+      console.log(this.currUser.uid)
+      this.checkCompleted()
+    })
+
+    
+  }
+
+  async checkCompleted() {
+    const rankingsRef = collection(this.firestore, "completedRankings");
+    const rankingQ = query(rankingsRef, where('userId', '==', this.currUser.uid), where('rankingId', '==', this.id))
+
+    const querySnapshot = await getDocs(rankingQ);
+    querySnapshot.forEach((doc:any) => {
+      
+      if (doc.data()) {
+        this.router.navigate(['results/' + this.id]).then(() => window.location.reload())
+      }
     })
   }
 
@@ -93,7 +110,7 @@ export class RankingComponent implements OnInit, OnDestroy {
       console.log(err)
     })
     const dbInstance = collection(this.firestore, 'completedRankings');
-    this.router.navigate(['completed-rankings']);
+    this.router.navigate(['results/' + this.id]);
     addDoc(dbInstance, ndoc).then((res) => {
       const snackref = this.snackbar.open("Submitted!", "Dismiss", {
         duration: 5000
