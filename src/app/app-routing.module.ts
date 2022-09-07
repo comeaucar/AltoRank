@@ -8,15 +8,13 @@ import { TrendingComponent } from './trending/trending.component';
 import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 import { CreatedRankingsComponent } from './created-rankings/created-rankings.component';
 import { CompletedRankingsComponent } from './completed-rankings/completed-rankings.component';
-import { NewComponent } from './new/new.component';
 import { ResultsComponent } from './results/results.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'create', component: CreateComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'trending', component: TrendingComponent },
-  {path: 'newest', component: NewComponent},
+  { path: 'popular', component: TrendingComponent },
   { path: 'ranking/:id', component: RankingComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'created-rankings', component: CreatedRankingsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'completed-rankings', component: CompletedRankingsComponent, canActivate: [AngularFireAuthGuard] },

@@ -6,7 +6,7 @@
     <mat-radio-button style="margin-left: 5px" *ngFor="let option of bordaOptions" [value]="option" [checked]="currBorda == option.toLowerCase()" (change)="radioChange($event, option)">{{option}}
       </mat-radio-button>
   </mat-radio-group>
-  <mat-icon matRipple style="margin-left: 20px" matTooltip="Borda methods explained" (click)="redirectToBordaInfo()">info</mat-icon>
+  <mat-icon *ngIf="res.length > 0" matRipple style="margin-left: 20px" matTooltip="Borda methods explained" (click)="redirectToBordaInfo()">info</mat-icon>
 </div>
 
 <mat-grid-list cols="1" rowHeight="2:1">
