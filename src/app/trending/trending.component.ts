@@ -4,7 +4,7 @@ import {
 } from '@angular/fire/auth';
 
 import { addDoc, Firestore, collection, getDocs} from '@angular/fire/firestore';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-trending',
@@ -15,25 +15,39 @@ export class TrendingComponent implements OnInit {
 
   rankings: any = []
   rippleColor = "#CBC3E3"
-  constructor(public auth: Auth, public firestore: Firestore, private router: Router) {
+  currSort: any
+  sortTypes = ['Popular', 'New']
+  constructor(public auth: Auth, public firestore: Firestore, private router: Router, private route: ActivatedRoute) {
     this.getRankings()
+    this.route.queryParams.subscribe(params => this.currSort = params['sort'])
    }
 
   ngOnInit(): void {
   }
 
 
-  getRankings() {
+  async getRankings() {
     const dbInstance = collection(this.firestore, 'rankings');
-    getDocs(dbInstance).then((res) => {
+    await getDocs(dbInstance).then((res) => {
       this.rankings = res.docs.map((item) => {
         return {...item.data(), id:item.id}
       })
+      this.rankings.sort((a:any, b:any) => {
+        if (a.submissions > b.submissions) {
+          return -1
+        }
+        return 1
+      })
     })
+
   }
 
   navToRanking(id: any){
     this.router.navigate(['ranking', id]);
+  }
+
+  changeSort($event:any) {
+    console.log()
   }
 
 }

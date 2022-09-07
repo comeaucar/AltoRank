@@ -4,11 +4,13 @@
 <mat-toolbar>
   <span>{{ranking.prompt}}</span>
 </mat-toolbar>
-
+  <div style="margin-left: 15px; margin-top: 10px;">
+    <h4>You can drag the  or use the add button</h4>
+  </div>
   <div cdkDropListGroup style="margin: 15px">
     <div class="example-container">
-      <h2>Available choices</h2>
-  
+      <h2>Available Options</h2>
+      
       <div
         cdkDropList
         [cdkDropListData]="ranking.choices"
@@ -17,12 +19,12 @@
         cdkDropListSortingDisabled
         disabled="true"
         (cdkDropListDropped)="drop($event)">
-        <div [cdkDragDisabled]="checkLimit()" class="example-box" *ngFor="let choice of ranking.choices; let i = index" cdkDrag>{{choice.choice.value}}</div>
+        <div [cdkDragDisabled]="checkLimit()" class="example-box" *ngFor="let choice of ranking.choices; let i = index" cdkDrag>{{choice.choice.value}} <button mat-raised-button color="primary" (click)="moveChoice(choice, i)"><mat-icon class="icon-colour">add</mat-icon></button></div>
       </div>
     </div>
   
     <div class="example-container">
-      <h2>Your rankings (1 - {{ranking.rankLimit}})</h2>
+      <h2>Your Rankings (1 - {{ranking.rankLimit}})</h2>
   
       <div
         cdkDropList

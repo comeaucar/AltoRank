@@ -20,12 +20,15 @@ export class RankingComponent implements OnInit, OnDestroy {
     prompt: '',
     choices: []
   }
+  term: any;
   id: string = ''
   private sub: any
   results: any = [];
   limitReached: boolean = false;
   currUser: any
-  originalChoices:any
+  originalChoices: any
+  rankingCopy :any
+  fakeData = ["test", "best", "sest", "zaest", "tester", "master"]
   constructor(private router: Router ,private route: ActivatedRoute, public auth: Auth, public firestore: Firestore, public snackbar: MatSnackBar) { }
 
   async ngOnInit() {
@@ -33,10 +36,12 @@ export class RankingComponent implements OnInit, OnDestroy {
       this.id = params['id']
       this.getRanking().then((res) => {
         this.ranking = res 
+        this.rankingCopy = res
       });
     })
 
     this.originalChoices = this.ranking
+    //this.rankingCopy = this.ranking
     const auth = getAuth()
     onAuthStateChanged(auth, (user) => {
       this.currUser = user
@@ -44,6 +49,16 @@ export class RankingComponent implements OnInit, OnDestroy {
     })
 
     
+  }
+
+  moveChoice(choice:any, index: number) {
+    console.log(choice)
+    if (this.checkLimit()) {
+      return
+    }
+    this.results[this.results.length] = this.ranking.choices[index]
+    this.ranking.choices.splice(index, 1)
+    console.log(this.results)
   }
 
   async checkCompleted() {
@@ -60,7 +75,7 @@ export class RankingComponent implements OnInit, OnDestroy {
         } else {
           this.router.navigate(['results/' + this.id], {
             queryParams: {borda: "original"}
-          }).then(() => window.location.reload())
+          })
         }
       }
     })
@@ -139,5 +154,23 @@ export class RankingComponent implements OnInit, OnDestroy {
         event.currentIndex,
       );
     }
+  }
+
+  changedText(event: any) {
+    if (event == '') {
+      console.log("empty")
+      console.log(this.ranking.choices)
+      this.rankingCopy.choices = this.ranking.choices
+      return
+    }
+    const regex = new RegExp("^" + event, 'gi')
+    let res = this.rankingCopy.choices.filter((x: any) => {
+      if (regex.test(x.choice.value)) {
+        return x.choice
+      }
+    })
+
+    console.log(res)
+    this.rankingCopy.choices = res
   }
 }

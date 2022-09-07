@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,13 +31,14 @@ import { CreatedRankingsComponent } from './created-rankings/created-rankings.co
 import { CompletedRankingsComponent } from './completed-rankings/completed-rankings.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { NewComponent } from './new/new.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { ResultsComponent } from './results/results.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -50,7 +50,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     RankingComponent,
     CreatedRankingsComponent,
     CompletedRankingsComponent,
-    NewComponent,
     ResultsComponent
   ],
   imports: [
@@ -80,7 +79,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AngularFirestoreModule,
     NgxChartsModule,
     MatRadioModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatButtonToggleModule,
+    Ng2SearchPipeModule
   ],
   providers: [{
     provide: FIREBASE_OPTIONS, useValue: environment.firebase
