@@ -29,6 +29,8 @@ export class CreateComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   choices: Choice[] = [];
   sliderLength = 2;
+  invalidTitle = false;
+  invalidPrompt = false;
   constructor(public auth: Auth, public firestore: Firestore, public snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
@@ -41,9 +43,26 @@ export class CreateComponent implements OnInit {
   }
 
   createSubmit(form: any) {
+    if (form.invalid) {
+      return;
+    }
     if (this.choices.length < 2) {
       this.invalidChoices = true
       return;
+    }
+
+    if (form.value.title.length < 5) {
+      this.invalidTitle = true;
+      return;
+    }
+
+    if (form.value.prompt.length < 5) {
+      this.invalidPrompt = true;
+      return;
+    }
+
+    if (form.value.rankLimit < 3) {
+      form.value.rankLimit = 2;
     }
     let choicesObj = []
     for (let i = 0; i < this.choices.length; i++){
@@ -59,7 +78,7 @@ export class CreateComponent implements OnInit {
     form.value.submissions = 0
     this.addRank(form.value);
     this.router.navigate(['trending']);
-    let snackBarRef = this.snackBar.open("Ranking successfully added!", "Okay", {
+    let snackBarRef = this.snackBar.open("Ranking successfully added!", "Dismiss", {
       duration: 3000
     })
     form.resetForm();

@@ -27,8 +27,6 @@ export class RankingComponent implements OnInit, OnDestroy {
   limitReached: boolean = false;
   currUser: any
   originalChoices: any
-  rankingCopy :any
-  fakeData = ["test", "best", "sest", "zaest", "tester", "master"]
   constructor(private router: Router ,private route: ActivatedRoute, public auth: Auth, public firestore: Firestore, public snackbar: MatSnackBar) { }
 
   async ngOnInit() {
@@ -36,12 +34,10 @@ export class RankingComponent implements OnInit, OnDestroy {
       this.id = params['id']
       this.getRanking().then((res) => {
         this.ranking = res 
-        this.rankingCopy = res
       });
     })
 
     this.originalChoices = this.ranking
-    //this.rankingCopy = this.ranking
     const auth = getAuth()
     onAuthStateChanged(auth, (user) => {
       this.currUser = user
@@ -156,21 +152,5 @@ export class RankingComponent implements OnInit, OnDestroy {
     }
   }
 
-  changedText(event: any) {
-    if (event == '') {
-      console.log("empty")
-      console.log(this.ranking.choices)
-      this.rankingCopy.choices = this.ranking.choices
-      return
-    }
-    const regex = new RegExp("^" + event, 'gi')
-    let res = this.rankingCopy.choices.filter((x: any) => {
-      if (regex.test(x.choice.value)) {
-        return x.choice
-      }
-    })
-
-    console.log(res)
-    this.rankingCopy.choices = res
-  }
+  
 }
