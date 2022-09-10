@@ -8,7 +8,7 @@
 </mat-toolbar>
 <div>
     <mat-grid-list cols="4" rowHeight="3:2">
-      <mat-grid-tile *ngFor="let ranking of userRankings">
+      <mat-grid-tile *ngFor="let ranking of userRankings; let i = index">
         <mat-card matBadge="{{ranking.data.submissions}}" matBadgePosition="after" matBadgeColor="accent">
           <mat-card-title >
               {{ranking.data.title}}
@@ -21,12 +21,17 @@
           </mat-card-content>
           <mat-card-actions>
             <button mat-raised-button color="accent" (click)="navToRanking(ranking.id)">View <mat-icon>launch</mat-icon></button>
-            <button mat-raised-button color="warn">Delete <mat-icon>delete</mat-icon></button>
+            <button mat-raised-button color="warn" (click)="deleteRanking(i)">Delete <mat-icon>delete</mat-icon></button>
             <button mat-raised-button>Share <mat-icon>share</mat-icon></button>
             
           </mat-card-actions>
           <mat-card-footer style="margin-left: 1px;">
             Created on {{ranking.data.createdAt}}
+            <div style="margin-top: 5px" *ngIf="confirmDelete && indexOfCardToDelete == i">
+              Confirm deletion
+              <button mat-raised-button color="warn" (click)="deleteRankingZ(ranking.id)">Delete</button>
+              <button mat-raised-button style="margin-left: 5px" color="primary" (click)="cancelDelete()">Cancel</button>              
+            </div>
           </mat-card-footer>
         </mat-card>
       </mat-grid-tile>
