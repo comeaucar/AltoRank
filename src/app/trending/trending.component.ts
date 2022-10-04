@@ -18,11 +18,11 @@ export class TrendingComponent implements OnInit {
   currSort: any
   sortTypes = ['Popular', 'New']
   constructor(public auth: Auth, public firestore: Firestore, private router: Router, private route: ActivatedRoute) {
-    this.getRankings()
-    this.route.queryParams.subscribe(params => this.currSort = params['sort'])
    }
 
   ngOnInit(): void {
+    this.getRankings()
+    this.route.queryParams.subscribe(params => this.currSort = params['sort'])
   }
 
 
@@ -32,11 +32,18 @@ export class TrendingComponent implements OnInit {
       this.rankings = res.docs.map((item) => {
         return {...item.data(), id:item.id}
       })
-      this.rankings.sort((a:any, b:any) => {
-        if (a.submissions > b.submissions) {
+      this.rankings.sort((a: any, b: any) => {
+        if (this.currSort == "popular") {
+          if (a.submissions > b.submissions) {
+            return -1
+          }
+          return 1
+        } else {
+          if (a.createdAt - b.createdAt >= 0) {
+            return 1
+          }
           return -1
         }
-        return 1
       })
     })
 
@@ -46,8 +53,13 @@ export class TrendingComponent implements OnInit {
     this.router.navigate(['ranking', id]);
   }
 
-  changeSort($event:any) {
-    console.log()
+  changeSort(event:any, val:any) {
+    console.log(event)
+    console.log(val)
+    this.router.navigate(['find/'], {
+      queryParams: {sort: event.value.toLowerCase()}
+    }).then(() => window.location.reload())
   }
+
 
 }

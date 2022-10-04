@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'create', component: CreateComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'popular', component: TrendingComponent },
+  { path: 'find', component: TrendingComponent },
   { path: 'ranking/:id', component: RankingComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'created-rankings', component: CreatedRankingsComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'completed-rankings', component: CompletedRankingsComponent, canActivate: [AngularFireAuthGuard] },

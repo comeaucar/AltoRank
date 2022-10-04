@@ -3,7 +3,7 @@
 </mat-toolbar>
 <div>
   <mat-button-toggle-group *ngIf="currSort" name="fontStyle" aria-label="Sort" >
-    <mat-button-toggle *ngFor="let sort of sortTypes" [value]="sort" [checked]="sort.toLowerCase() == currSort">{{sort}}</mat-button-toggle>
+    <mat-button-toggle *ngFor="let sort of sortTypes" [value]="sort" [checked]="sort.toLowerCase() == currSort" (change)="changeSort($event,sort)">{{sort}}</mat-button-toggle>
   </mat-button-toggle-group>
 </div>
 <div>
