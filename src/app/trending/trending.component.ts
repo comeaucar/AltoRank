@@ -39,10 +39,11 @@ export class TrendingComponent implements OnInit {
           }
           return 1
         } else {
-          if (a.createdAt - b.createdAt >= 0) {
-            return 1
+          console.log(typeof(a.createdAt))
+          if (Date.parse(a.createdAt) - Date.parse(b.createdAt) >= 0) {
+            return -1
           }
-          return -1
+          return 1
         }
       })
     })
