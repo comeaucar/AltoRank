@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
     const auth = getAuth()
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("user")
+        console.log("user logged")
         this.userLoggedIn = true
       } else {
         console.log("no user")
