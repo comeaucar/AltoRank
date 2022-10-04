@@ -23,14 +23,18 @@
             <button mat-raised-button color="accent" (click)="navToRanking(ranking.id)">View <mat-icon>launch</mat-icon></button>
             <button mat-raised-button color="warn" (click)="deleteRanking(i)">Delete <mat-icon>delete</mat-icon></button>
             <button mat-raised-button>Share <mat-icon>share</mat-icon></button>
-            
+            <button mat-raised-button (click)="editRanking(i)"><mat-icon>settings</mat-icon></button>
           </mat-card-actions>
-          <mat-card-footer style="margin-left: 1px;">
+          <mat-card-footer style="margin-left: 0.1px;">
             Created on {{ranking.data.createdAt}}
-            <div style="margin-top: 5px" *ngIf="confirmDelete && indexOfCardToDelete == i">
+            <div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="confirmDelete && indexOfCardToDelete == i">
               Confirm deletion
               <button mat-raised-button color="warn" (click)="deleteRankingZ(ranking.id)">Delete</button>
               <button mat-raised-button style="margin-left: 5px" color="primary" (click)="cancelDelete()">Cancel</button>              
+            </div>
+            <div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="confirmEdit && indexOfCardToEdit == i">
+              <button matTooltip="Toggle ranking results privacy" mat-raised-button color="warn" (click)="editRankingPrivacy(ranking.id, ranking)"><mat-icon *ngIf="ranking.data.private">lock</mat-icon><mat-icon *ngIf="!ranking.data.private">lock_open</mat-icon></button>
+              <button style="margin-left: 5px;" matTooltip="Toggle ranking visibility" mat-raised-button color="danger" (click)="editRankingVisibility(ranking.id, ranking)"><mat-icon *ngIf="ranking.data.visible">visibility</mat-icon><mat-icon *ngIf="!ranking.data.visible">visibility_off</mat-icon></button>
             </div>
           </mat-card-footer>
         </mat-card>
