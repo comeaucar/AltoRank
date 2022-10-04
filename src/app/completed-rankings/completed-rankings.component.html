@@ -4,6 +4,7 @@
 <div>
     <mat-grid-list cols="4" rowHeight="3:2">
       <mat-grid-tile *ngFor="let ranking of fRankings; let i = index">
+        <div *ngIf="ranking">
         <mat-card matBadge="{{ranking.submissions}}" matBadgePosition="after" matBadgeColor="accent">
           <mat-card-title >
               {{ranking.title}}
@@ -23,6 +24,7 @@
             Submitted at {{completedRankings[i].data.timeSubmitted}}
           </mat-card-footer>
         </mat-card>
+        </div>
       </mat-grid-tile>
     </mat-grid-list>
   </div>
