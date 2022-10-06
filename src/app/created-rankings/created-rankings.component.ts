@@ -55,7 +55,10 @@ export class CreatedRankingsComponent implements OnInit {
   }
 
   deleteRanking(index: any) {
-    this.confirmDelete = !this.confirmDelete;
+    if (this.indexOfCardToDelete == index) {
+      this.confirmDelete = !this.confirmDelete; 
+    }
+    this.confirmDelete = true;
     this.indexOfCardToDelete = index
   }
 
@@ -76,7 +79,11 @@ export class CreatedRankingsComponent implements OnInit {
   }
 
   editRanking(index: any) {
-    this.confirmEdit = !this.confirmEdit;
+    if (this.indexOfCardToEdit == index) {
+      this.confirmEdit = !this.confirmEdit;
+      return;
+    }
+    this.confirmEdit = true;
     this.indexOfCardToEdit = index;
   }
 
