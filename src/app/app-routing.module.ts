@@ -13,12 +13,33 @@ import { ResultsComponent } from './results/results.component';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'create', component: CreateComponent, canActivate: [AngularFireAuthGuard] },
+  {
+    path: 'create',
+    component: CreateComponent,
+    canActivate: [AngularFireAuthGuard],
+  },
   { path: 'find', component: TrendingComponent },
-  { path: 'ranking/:id', component: RankingComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'created-rankings', component: CreatedRankingsComponent, canActivate: [AngularFireAuthGuard] },
-  { path: 'completed-rankings', component: CompletedRankingsComponent, canActivate: [AngularFireAuthGuard] },
-  {path: 'results/:id', component: ResultsComponent, canActivate: [AngularFireAuthGuard]}
+  {
+    path: 'ranking/:id',
+    component: RankingComponent,
+    canActivate: [AngularFireAuthGuard],
+  },
+  {
+    path: 'created-rankings',
+    component: CreatedRankingsComponent,
+    canActivate: [AngularFireAuthGuard],
+  },
+  {
+    path: 'completed-rankings',
+    component: CompletedRankingsComponent,
+    canActivate: [AngularFireAuthGuard],
+  },
+  {
+    path: 'results/:id',
+    component: ResultsComponent,
+    canActivate: [AngularFireAuthGuard],
+  },
+  { path: '**', component: HomeComponent },
 ];
 
 @NgModule({

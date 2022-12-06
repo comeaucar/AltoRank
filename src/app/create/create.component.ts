@@ -76,7 +76,7 @@ export class CreateComponent implements OnInit {
     form.value.createdBy = this.currUserId
     form.value.createdAt = new Date().toLocaleString();
     form.value.submissions = 0
-    form.value.visible
+    form.value.visible = true;
     this.addRank(form.value);
     this.router.navigate(['find']);
     let snackBarRef = this.snackBar.open("Ranking successfully added!", "Dismiss", {

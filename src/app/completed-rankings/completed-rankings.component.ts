@@ -45,7 +45,7 @@ export class CompletedRankingsComponent implements OnInit {
     });
   }
 
-  async getCompleted() {
+    async getCompleted() {
     const rankingsRef = collection(this.firestore, 'completedRankings');
     const rankingQ = query(
       rankingsRef,
@@ -58,16 +58,15 @@ export class CompletedRankingsComponent implements OnInit {
         data: doc.data(),
         id: doc.id,
       };
-      this.completedRankings.push(fDoc);
+      
       this.getFormattedRanking(fDoc.data.rankingId).then((res) => {
-        console.log(res);
+        
         if (res != null) {
           this.fRankings.push(res);
+          this.completedRankings.push(fDoc);
         }
       });
     });
-
-    console.log(this.completedRankings);
   }
 
   async getFormattedRanking(id: any) {
@@ -77,7 +76,6 @@ export class CompletedRankingsComponent implements OnInit {
     if (docSnap.exists()) {
       return docSnap.data();
     } else {
-      console.log('No document found');
       return null;
     }
   }

@@ -8,7 +8,8 @@ import {
   getDocs,
 } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { Clipboard } from '@angular/cdk/clipboard';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-trending',
   templateUrl: './trending.component.html',
@@ -23,7 +24,9 @@ export class TrendingComponent implements OnInit {
     public auth: Auth,
     public firestore: Firestore,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private clipboard: Clipboard,
+    public snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -54,11 +57,11 @@ export class TrendingComponent implements OnInit {
       });
 
       this.rankings = this.rankings.filter((x: any) => {
-        if (x.hasOwnProperty("visible") && x.visible == false) {
+        if (x.hasOwnProperty('visible') && x.visible == false) {
           return false;
         }
         return true;
-      }) 
+      });
     });
   }
 
@@ -67,12 +70,17 @@ export class TrendingComponent implements OnInit {
   }
 
   changeSort(event: any, val: any) {
-    console.log(event);
-    console.log(val);
     this.router
       .navigate(['find/'], {
         queryParams: { sort: event.value.toLowerCase() },
       })
       .then(() => window.location.reload());
+  }
+
+  shareRanking(rankingId: any) {
+    this.clipboard.copy(`https://altorank.ca/ranking/${rankingId}`);
+    this.snackbar.open("Copied ranking to clipboard!", "Dismiss", {
+      duration: 3000
+    })
   }
 }

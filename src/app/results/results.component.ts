@@ -90,6 +90,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
           borda += choice.rankCount[i] * (choice.rankCount.length - i - 1);
         } else if (this.currBorda == 'dowdall') {
           borda += choice.rankCount[i] * (1 / (i + 1));
+          console.log(borda)
         } else {
           borda += choice.rankCount[i] * (choice.rankCount.length - i)
         }
