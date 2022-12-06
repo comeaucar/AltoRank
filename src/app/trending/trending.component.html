@@ -1,30 +1,46 @@
 <mat-toolbar color="primary">
-  <span style="margin: auto;">Popular Polls</span>
+  <span style="margin: auto">Popular Polls</span>
 </mat-toolbar>
 <div>
-  <mat-button-toggle-group *ngIf="currSort" name="fontStyle" aria-label="Sort" >
-    <mat-button-toggle *ngFor="let sort of sortTypes" [value]="sort" [checked]="sort.toLowerCase() == currSort" (change)="changeSort($event,sort)">{{sort}}</mat-button-toggle>
+  <mat-button-toggle-group *ngIf="currSort" name="fontStyle" aria-label="Sort">
+    <mat-button-toggle
+      *ngFor="let sort of sortTypes"
+      [value]="sort"
+      [checked]="sort.toLowerCase() == currSort"
+      (change)="changeSort($event, sort)"
+      >{{ sort }}</mat-button-toggle
+    >
   </mat-button-toggle-group>
 </div>
 <div>
   <mat-grid-list cols="4" rowHeight="3:2">
     <mat-grid-tile *ngFor="let ranking of rankings">
-      <mat-card matBadge="{{ranking.submissions}}" matBadgePosition="after" matBadgeColor="accent">
-        <mat-card-title >
-            {{ranking.title}}
+      <mat-card
+        matBadge="{{ ranking.submissions }}"
+        matBadgePosition="after"
+        matBadgeColor="accent"
+      >
+        <mat-card-title>
+          {{ ranking.title }}
         </mat-card-title>
         <mat-card-subtitle>
-            {{ranking.prompt}}
+          {{ ranking.prompt }}
         </mat-card-subtitle>
-        <mat-card-content>
-          
-        </mat-card-content>
+        <mat-card-content> </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="accent" (click)="navToRanking(ranking.id)">View<mat-icon>launch</mat-icon></button>
-          <button mat-raised-button>Share <mat-icon>share</mat-icon></button>
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="navToRanking(ranking.id)"
+          >
+            View<mat-icon>launch</mat-icon>
+          </button>
+          <button mat-raised-button (click)="shareRanking(ranking.id)">
+            Share <mat-icon>share</mat-icon>
+          </button>
         </mat-card-actions>
-        <mat-card-footer style="margin-left: 1px" >
-          Created on {{ranking.createdAt | date}}<br>
+        <mat-card-footer style="margin-left: 1px">
+          Created on {{ ranking.createdAt | date }}<br />
         </mat-card-footer>
       </mat-card>
     </mat-grid-tile>
