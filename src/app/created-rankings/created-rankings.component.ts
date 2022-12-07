@@ -30,7 +30,6 @@ export class CreatedRankingsComponent implements OnInit {
   confirmEdit: boolean = false;
   indexOfCardToEdit: number = 0;
   cols: number = 0;
-  
 
   gridByBreakpoint = {
     xl: 3,
@@ -74,7 +73,6 @@ export class CreatedRankingsComponent implements OnInit {
           }
         }
       });
-    
   }
 
   async ngOnInit() {
@@ -107,9 +105,15 @@ export class CreatedRankingsComponent implements OnInit {
     this.router.navigate(['ranking', id]);
   }
 
-  
+  deleteRanking(index: any) {
+    if (this.indexOfCardToDelete == index) {
+      this.confirmDelete = !this.confirmDelete;
+    }
+    this.confirmDelete = true;
+    this.indexOfCardToDelete = index;
+  }
 
-  deleteRanking(id: any) {
+  deleteRankingZ(id: any) {
     const rankingToDelete = doc(this.firestore, 'rankings', id);
     deleteDoc(rankingToDelete)
       .then(() => {
