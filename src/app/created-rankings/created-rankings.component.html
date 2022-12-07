@@ -29,7 +29,7 @@
             Created on {{ranking.data.createdAt}}
             <div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="confirmDelete && indexOfCardToDelete == i">
               Confirm deletion
-              <button mat-raised-button color="warn" (click)="deleteRanking(ranking.id)">Delete</button>
+              <button mat-raised-button color="warn" (click)="deleteRankingZ(ranking.id)">Delete</button>
               <button mat-raised-button style="margin-left: 5px" color="primary" (click)="cancelDelete()">Cancel</button>              
             </div>
             <div style="margin-top: 5px; margin-bottom: 5px;" *ngIf="confirmEdit && indexOfCardToEdit == i">
