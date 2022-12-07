@@ -5,110 +5,159 @@ import { ActivatedRoute } from '@angular/router';
 import { Auth, getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { getDoc, doc, collection, getDocFromCache, addDoc, limit, FieldValue, updateDoc } from 'firebase/firestore';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
-  styleUrls: ['./results.component.css']
+  styleUrls: ['./results.component.css'],
 })
 export class ResultsComponent implements OnInit, OnDestroy {
-
-  res: any = []
-  private sub:any
+  res: any = [];
+  private sub: any;
   id: any;
   ranking: any;
   bordaOptions = ['Original', 'Tournament', 'Dowdall'];
   currBorda: any;
+  cols: number = 0;
 
-
-  view: any[] = [700, 370]
-  schemeType:any = 'ordinal'
+  view: any[] = [700, 370];
+  schemeType: any = 'ordinal';
   xAxis = true;
-  yAxis = true
-  legendTitle = "Values"
-  legendPosition = 'below'
-  legend = true
-  showXAxisLabel = true
-  showYAxisLabel = true
-  yAxisLabel = "Borda Count"
-  xAxisLabel = "Values"
+  yAxis = true;
+  legendTitle = 'Values';
+  legendPosition = 'below';
+  legend = true;
+  showXAxisLabel = true;
+  showYAxisLabel = true;
+  yAxisLabel = 'Borda Count';
+  xAxisLabel = 'Values';
   animations = true;
-  showGridLines = true
-  showDataLabel = true
-  barPadding = 5
-  tooltipDisabled = false
-  roundEdges = false
-  cardColor: string = '#232837'
+  showGridLines = true;
+  showDataLabel = true;
+  barPadding = 5;
+  tooltipDisabled = false;
+  roundEdges = false;
+  cardColor: string = '#232837';
   gradient: boolean = true;
   showLegend: boolean = true;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
 
-  currUser:any
+  currUser: any;
+  gridByBreakpoint = {
+    xl: 3,
+    lg: 3,
+    md: 3,
+    sm: 2,
+    xs: 1,
+  };
 
-
-  constructor(private router: Router, private route: ActivatedRoute, public auth: Auth, public firestore: Firestore, public snackbar: MatSnackBar) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    public auth: Auth,
+    public firestore: Firestore,
+    public snackbar: MatSnackBar,
+    private breakpointObserver: BreakpointObserver
+  ) {
+    this.breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .subscribe((result) => {
+        if (result.matches) {
+          if (result.breakpoints[Breakpoints.XSmall]) {
+            this.cols = this.gridByBreakpoint.xs;
+          }
+          if (result.breakpoints[Breakpoints.Small]) {
+            this.cols = this.gridByBreakpoint.sm;
+          }
+          if (result.breakpoints[Breakpoints.Medium]) {
+            this.cols = this.gridByBreakpoint.md;
+          }
+          if (result.breakpoints[Breakpoints.Large]) {
+            this.cols = this.gridByBreakpoint.lg;
+          }
+          if (result.breakpoints[Breakpoints.XLarge]) {
+            this.cols = this.gridByBreakpoint.xl;
+          }
+        }
+      });
+  }
 
   ngOnInit(): void {
-    const auth = getAuth()
+    const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-      this.currUser = user
-    })
-    this.sub = this.route.params.subscribe(params => {
-      this.id = params['id']
+      this.currUser = user;
+    });
+    this.sub = this.route.params.subscribe((params) => {
+      this.id = params['id'];
       this.getRanking().then((res) => {
-        this.ranking = res
-        if (this.ranking.private && this.ranking.createdBy != this.currUser.uid) {
-          this.router.navigate(['completed-rankings'])
-          this.snackbar.open("The results for this poll are private at this time", "Dismiss")
+        this.ranking = res;
+        if (
+          this.ranking.private &&
+          this.ranking.createdBy != this.currUser.uid
+        ) {
+          this.router.navigate(['completed-rankings']);
+          this.snackbar.open(
+            'The results for this poll are private at this time',
+            'Dismiss'
+          );
         }
-        this.calcBorda()
+        this.calcBorda();
       });
-    })
+    });
 
-    this.route.queryParams.subscribe(params => this.currBorda = params['borda'])
+    this.route.queryParams.subscribe(
+      (params) => (this.currBorda = params['borda'])
+    );
 
-    console.log(this.currBorda)
+    console.log(this.currBorda);
   }
 
   async getRanking() {
-    const docRef = doc(this.firestore, "rankings", this.id);
+    const docRef = doc(this.firestore, 'rankings', this.id);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      return docSnap.data()
+      return docSnap.data();
     } else {
-      console.log("No document found")
+      console.log('No document found');
       return null;
     }
   }
 
   calcBorda() {
-    this.ranking.choices.map((choice:any) => {
-      let borda = 0
-      for (let i = 0; i < choice.rankCount.length; i++){
+    this.ranking.choices.map((choice: any) => {
+      let borda = 0;
+      for (let i = 0; i < choice.rankCount.length; i++) {
         if (this.currBorda == 'tournament') {
           borda += choice.rankCount[i] * (choice.rankCount.length - i - 1);
         } else if (this.currBorda == 'dowdall') {
           borda += choice.rankCount[i] * (1 / (i + 1));
-          console.log(borda)
+          console.log(borda);
         } else {
-          borda += choice.rankCount[i] * (choice.rankCount.length - i)
+          borda += choice.rankCount[i] * (choice.rankCount.length - i);
         }
       }
       let fRes = {
         name: choice.choice.value,
-        value: borda
-      }
-      this.res.push(fRes)
-    })
+        value: borda,
+      };
+      this.res.push(fRes);
+    });
 
-    this.res.sort((a: any, b:any) => {
+    this.res.sort((a: any, b: any) => {
       if (a.value > b.value) {
-        return -1
+        return -1;
       } else {
-        return 1
+        return 1;
       }
-    })
+    });
   }
 
   ngOnDestroy() {
@@ -116,18 +165,20 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   radioChange(event: any, val: any) {
-    console.log(event)
-    console.log(val)
-    this.router.navigate(['results/' + this.id], {
-      queryParams: {borda: event.value.toLowerCase()}
-    }).then(() => window.location.reload())
+    console.log(event);
+    console.log(val);
+    this.router
+      .navigate(['results/' + this.id], {
+        queryParams: { borda: event.value.toLowerCase() },
+      })
+      .then(() => window.location.reload());
   }
 
   redirectToBordaInfo() {
-    let a = document.createElement('a')
-    a.target = '_blank'
-    a.href = 'https://en.wikipedia.org/wiki/Borda_count#:~:text=Tournament%2Dstyle%20counting%5B,in%201971.%5B7%5D'
-    a.click()
+    let a = document.createElement('a');
+    a.target = '_blank';
+    a.href =
+      'https://en.wikipedia.org/wiki/Borda_count#:~:text=Tournament%2Dstyle%20counting%5B,in%201971.%5B7%5D';
+    a.click();
   }
-
 }

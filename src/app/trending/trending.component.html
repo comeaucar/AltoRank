@@ -13,12 +13,13 @@
   </mat-button-toggle-group>
 </div>
 <div>
-  <mat-grid-list cols="4" rowHeight="3:2">
+  <mat-grid-list #grid [cols]="cols"  gutterSize="20px" rowHeight="20:11">
     <mat-grid-tile *ngFor="let ranking of rankings">
       <mat-card
         matBadge="{{ ranking.submissions }}"
         matBadgePosition="after"
         matBadgeColor="accent"
+        style="max-width: 90%;"
       >
         <mat-card-title>
           {{ ranking.title }}

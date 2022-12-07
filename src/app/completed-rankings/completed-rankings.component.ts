@@ -19,6 +19,7 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Auth } from '@angular/fire/auth';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-completed-rankings',
@@ -29,13 +30,52 @@ export class CompletedRankingsComponent implements OnInit {
   completedRankings: any = [];
   currUser: any;
   fRankings: any = [];
+  cols: number = 0;
+
+  gridByBreakpoint = {
+    xl: 3,
+    lg: 3,
+    md: 3,
+    sm: 2,
+    xs: 1,
+  };
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     public auth: Auth,
     public firestore: Firestore,
-    public snackbar: MatSnackBar
-  ) {}
+    public snackbar: MatSnackBar,
+    private breakpointObserver: BreakpointObserver
+  ) {
+    this.breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .subscribe((result) => {
+        if (result.matches) {
+          if (result.breakpoints[Breakpoints.XSmall]) {
+            this.cols = this.gridByBreakpoint.xs;
+          }
+          if (result.breakpoints[Breakpoints.Small]) {
+            this.cols = this.gridByBreakpoint.sm;
+          }
+          if (result.breakpoints[Breakpoints.Medium]) {
+            this.cols = this.gridByBreakpoint.md;
+          }
+          if (result.breakpoints[Breakpoints.Large]) {
+            this.cols = this.gridByBreakpoint.lg;
+          }
+          if (result.breakpoints[Breakpoints.XLarge]) {
+            this.cols = this.gridByBreakpoint.xl;
+          }
+        }
+      });
+  }
 
   ngOnInit(): void {
     const auth = getAuth();
@@ -45,7 +85,7 @@ export class CompletedRankingsComponent implements OnInit {
     });
   }
 
-    async getCompleted() {
+  async getCompleted() {
     const rankingsRef = collection(this.firestore, 'completedRankings');
     const rankingQ = query(
       rankingsRef,
@@ -58,9 +98,8 @@ export class CompletedRankingsComponent implements OnInit {
         data: doc.data(),
         id: doc.id,
       };
-      
+
       this.getFormattedRanking(fDoc.data.rankingId).then((res) => {
-        
         if (res != null) {
           this.fRankings.push(res);
           this.completedRankings.push(fDoc);

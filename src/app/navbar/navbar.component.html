@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="" style="margin-left: 2%;">AltoRank</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation" (click)="toggleCollapsed()">
+    <button style="margin-right: 5px" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation" (click)="toggleCollapsed()">
       <span class="navbar-toggler-icon"></span>
     </button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'collapse':collapsed, 'navbar-collapse': true}">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto" style="margin-left: 10px">
         <li class="nav-item active">
           <a class="nav-link" href="home">Home</a>
         </li>
@@ -23,11 +23,11 @@
         </li>
       </ul>
       <div class="ms-auto" *ngIf="!userLoggedIn">
-        <button  mat-raised-button (click)="open(signInModal)">Sign In</button>
+        <button  mat-raised-button (click)="open(signInModal)" style="margin-left: 5px">Sign In</button>
         <button mat-raised-button color="primary" (click)="open(signUpModal)" style="margin-left: 5px; margin-right: 10px;">Sign Up</button>
       </div>
       <div class="ms-auto" *ngIf="userLoggedIn">
-        <button mat-raised-button color="warn" (click)="signOut()" style="margin-right: 10px;">Sign Out</button>
+        <button mat-raised-button color="warn" (click)="signOut()" style="margin-right: 10px; margin-left: 5px;">Sign Out</button>
       </div>
     </div>
   </nav>

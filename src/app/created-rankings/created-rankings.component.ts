@@ -14,6 +14,7 @@ import {
 } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-created-rankings',
@@ -28,12 +29,53 @@ export class CreatedRankingsComponent implements OnInit {
   indexOfCardToDelete: number = 0;
   confirmEdit: boolean = false;
   indexOfCardToEdit: number = 0;
+  cols: number = 0;
+  
+
+  gridByBreakpoint = {
+    xl: 3,
+    lg: 3,
+    md: 3,
+    sm: 2,
+    xs: 1,
+  };
+
   constructor(
     public auth: Auth,
     public firestore: Firestore,
     private router: Router,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    private breakpointObserver: BreakpointObserver
+  ) {
+    this.breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .subscribe((result) => {
+        if (result.matches) {
+          if (result.breakpoints[Breakpoints.XSmall]) {
+            this.cols = this.gridByBreakpoint.xs;
+          }
+          if (result.breakpoints[Breakpoints.Small]) {
+            this.cols = this.gridByBreakpoint.sm;
+          }
+          if (result.breakpoints[Breakpoints.Medium]) {
+            this.cols = this.gridByBreakpoint.md;
+          }
+          if (result.breakpoints[Breakpoints.Large]) {
+            this.cols = this.gridByBreakpoint.lg;
+          }
+          if (result.breakpoints[Breakpoints.XLarge]) {
+            this.cols = this.gridByBreakpoint.xl;
+          }
+        }
+      });
+    
+  }
 
   async ngOnInit() {
     const auth = getAuth();
@@ -65,15 +107,9 @@ export class CreatedRankingsComponent implements OnInit {
     this.router.navigate(['ranking', id]);
   }
 
-  deleteRanking(index: any) {
-    if (this.indexOfCardToDelete == index) {
-      this.confirmDelete = !this.confirmDelete;
-    }
-    this.confirmDelete = true;
-    this.indexOfCardToDelete = index;
-  }
+  
 
-  deleteRankingZ(id: any) {
+  deleteRanking(id: any) {
     const rankingToDelete = doc(this.firestore, 'rankings', id);
     deleteDoc(rankingToDelete)
       .then(() => {
