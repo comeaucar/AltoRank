@@ -25,14 +25,17 @@
         *ngFor="let choice of ranking.choices; let i = index"
         cdkDrag
       >
-        {{ choice.choice.value }}
-        <button
+      <button
           mat-raised-button
           color="primary"
           (click)="moveChoice(choice, i)"
         >
           <mat-icon class="icon-colour">add</mat-icon>
+           
         </button>
+        {{ choice.choice.value }}
+        
+        <mat-icon cdkDragHandle>drag_handle</mat-icon> 
       </div>
     </div>
   </div>
@@ -74,6 +77,13 @@
         <b *ngIf="i > 2" style="margin-left: 10px" matBadge="{{ i + 1 }}"></b>
 
         {{ item.choice.value }}
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="deleteChoice(item, i)"
+        >
+          <mat-icon >delete</mat-icon>
+        </button>
       </div>
     </div>
   </div>
