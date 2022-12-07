@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   userLoggedIn = false;
   passwordsDoNotMatch = false;
   emailInUse = false;
+  collapsed = true;
   constructor(private modalService: NgbModal, public auth: Auth, public router: Router, private snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
@@ -89,6 +90,10 @@ export class NavbarComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  toggleCollapsed(): void{
+    this.collapsed = !this.collapsed;
   }
 
 }
