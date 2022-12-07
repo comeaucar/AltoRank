@@ -64,13 +64,17 @@ export class RankingComponent implements OnInit, OnDestroy {
   }
 
   moveChoice(choice: any, index: number) {
-    console.log(choice);
     if (this.checkLimit()) {
       return;
     }
     this.results[this.results.length] = this.ranking.choices[index];
     this.ranking.choices.splice(index, 1);
     console.log(this.results);
+  }
+
+  deleteChoice(item: any, index: number) {
+    this.ranking.choices[this.ranking.choices.length] = this.results[index];
+    this.results.splice(index, 1);
   }
 
   async checkCompleted() {
