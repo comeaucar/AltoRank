@@ -7,6 +7,42 @@
     <span style="margin: auto">How it works  <mat-icon>arrow_downward</mat-icon></span>
 </mat-toolbar>
 
+<div *ngIf="cols < 3">
+    <mat-grid-list #grid [cols]="cols"  gutterSize="20px" rowHeight="4:3">
+      <mat-grid-tile>
+        <img class="tile-image" [src]="images[0]">
+      </mat-grid-tile>
+      <mat-grid-tile>
+      <mat-card style="max-width: 90%">
+      <mat-card-title style="line-height: 1.6;">AltoRank provides users with the ability to create and participate in ranked voting for <b>any topic imaginable</b></mat-card-title>
+      <mat-card-subtitle *ngIf="!userLoggedIn" style="font-size: large;">Get started by <button mat-raised-button [disabled]="userLoggedIn" color="accent" (click)="open(signUpModal)">creating an account</button></mat-card-subtitle>
+      </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <img class="tile-image" [src]="images[1]">
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card style="max-width: 90%;">
+      <mat-card-title style="line-height: 1.6;">You choose the topic, we'll do the rest</mat-card-title>
+      <mat-card-subtitle style="font-size: large; line-height: 1.6;">Simply create a ranked voting poll for a topic of your choosing. Users will then be able to participate in the poll by ranking the choices you provide.
+      <br>
+      <button mat-raised-button color="primary" (click)="navCreate()">Create a poll</button>
+      </mat-card-subtitle>
+    </mat-card>
+      </mat-grid-tile >
+      <mat-grid-tile>
+        <img class="tile-image" [src]="images[2]">
+      </mat-grid-tile>
+      <mat-grid-tile >
+        <mat-card style="max-width: 90%;">
+      <mat-card-title style="line-height: 1.6;">Enjoy your results</mat-card-title>
+      <mat-card-subtitle style="font-size: large; line-height: 1.6;">We format the data into multiple graphs so you can easily analyze and share the results of your poll.</mat-card-subtitle>
+    </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+
+<div *ngIf="cols == 3">
 <div class="parent flex-parent">
   <div class="child flex-child">
     <mat-card style="padding: 50px">
@@ -34,6 +70,7 @@
     </mat-card>
   </div>
   <div class="child flex-child"><img class="image" [src]="images[2]"></div>
+</div>
 </div>
 
 <ng-template #signUpModal let-modal>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import {
   addDoc,
@@ -20,14 +21,53 @@ export class TrendingComponent implements OnInit {
   rippleColor = '#CBC3E3';
   currSort: any;
   sortTypes = ['Popular', 'New'];
+  cols: number = 0;
+
+  gridByBreakpoint = {
+    xl: 3,
+    lg: 3,
+    md: 3,
+    sm: 2,
+    xs: 1,
+  };
+
   constructor(
     public auth: Auth,
     public firestore: Firestore,
     private router: Router,
     private route: ActivatedRoute,
     private clipboard: Clipboard,
-    public snackbar: MatSnackBar
-  ) {}
+    public snackbar: MatSnackBar,
+    private breakpointObserver: BreakpointObserver
+  ) {
+    this.breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .subscribe((result) => {
+        if (result.matches) {
+          if (result.breakpoints[Breakpoints.XSmall]) {
+            this.cols = this.gridByBreakpoint.xs;
+          }
+          if (result.breakpoints[Breakpoints.Small]) {
+            this.cols = this.gridByBreakpoint.sm;
+          }
+          if (result.breakpoints[Breakpoints.Medium]) {
+            this.cols = this.gridByBreakpoint.md;
+          }
+          if (result.breakpoints[Breakpoints.Large]) {
+            this.cols = this.gridByBreakpoint.lg;
+          }
+          if (result.breakpoints[Breakpoints.XLarge]) {
+            this.cols = this.gridByBreakpoint.xl;
+          }
+        }
+      });
+  }
 
   ngOnInit(): void {
     this.getRankings();
@@ -79,8 +119,8 @@ export class TrendingComponent implements OnInit {
 
   shareRanking(rankingId: any) {
     this.clipboard.copy(`https://altorank.ca/ranking/${rankingId}`);
-    this.snackbar.open("Copied ranking to clipboard!", "Dismiss", {
-      duration: 3000
-    })
+    this.snackbar.open('Copied ranking to clipboard!', 'Dismiss', {
+      duration: 3000,
+    });
   }
 }

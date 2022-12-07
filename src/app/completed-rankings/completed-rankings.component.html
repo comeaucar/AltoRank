@@ -2,10 +2,10 @@
     <span>Completed Rankings</span>
 </mat-toolbar>
 <div>
-    <mat-grid-list cols="4" rowHeight="3:2">
+    <mat-grid-list #grid [cols]="cols"  gutterSize="20px" rowHeight="20:11">
       <mat-grid-tile *ngFor="let ranking of fRankings; let i = index">
         <div *ngIf="ranking">
-        <mat-card matBadge="{{ranking.submissions}}" matBadgePosition="after" matBadgeColor="accent">
+        <mat-card style="max-width: 95%" matBadge="{{ranking.submissions}}" matBadgePosition="after" matBadgeColor="accent">
           <mat-card-title >
               {{ranking.title}}
           </mat-card-title>
