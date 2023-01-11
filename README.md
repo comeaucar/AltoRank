@@ -4,18 +4,22 @@ Welcome to AltoRank! A web application created by Carter Comeau.
 
 ## What is AltoRank?
 
-AltoRank allows users to create rankings and complete rankings for any topic you can think of. 
+AltoRank allows users to create and participate in polls for any topic imaginable. 
 
 For example,
 
-I could create a ranking for "Best Food"
+Create a poll for "Best Food"
 
-When I create this ranking, I provide a list of choices for the rankings. AltoRank plans to also include populated data pools for categories.
+After creating this poll, provide a list of desired choices for the rankings.
 
-Now, users can log on and complete the ranking. If you choose to have a ranking from 1-10, then users will fill out which foods they think are best from 1-10. 
+Now users participate in your poll. 
+If you choose to have a ranking from 1-10, then users will fill out which foods they think are best from 1-10. 
 
-After the user submits, AltoRank then provides an interface to view this data on graphs and tables. This data can be private to the ranking creator, or public for all to view. The creator can now see real data for which food is considered best by users.
+After the user submits, AltoRank provides an interface to view the results using various graphs and tables. 
+The results can be private to the creator, or public for all to view. 
 
-## Why is this useful?
+The creator can now see real data for which food is considered best by users!
+
+## Purpose
 
 AltoRank wants to serve as a platform to fetch data for various topics, and provide real results for ranking creators or curious users.
