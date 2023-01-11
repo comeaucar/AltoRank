@@ -1,3 +1,4 @@
+altorank.ca
 # Altorank
 
 Welcome to AltoRank! A web application created by Carter Comeau.
