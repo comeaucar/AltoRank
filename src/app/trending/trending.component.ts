@@ -20,6 +20,7 @@ export class TrendingComponent implements OnInit {
   rankings: any = [];
   rippleColor = '#CBC3E3';
   currSort: any;
+  currTitle: string = "";
   sortTypes = ['Popular', 'New'];
   cols: number = 0;
 
@@ -72,7 +73,10 @@ export class TrendingComponent implements OnInit {
   ngOnInit(): void {
     this.getRankings();
     this.route.queryParams.subscribe(
-      (params) => (this.currSort = params['sort'])
+      (params) => {
+        this.currSort = params['sort'];
+        this.currTitle = this.currSort.charAt(0).toUpperCase() + this.currSort.slice(1);
+      }
     );
   }
 
